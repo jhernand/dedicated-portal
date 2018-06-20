@@ -34,9 +34,15 @@ openshift_disable_check=disk_availability,memory_availability
 # Disable some components that we don't need:
 ansible_service_broker_install=false
 openshift_enable_service_catalog=false
-openshift_hosted_manage_registry=false
 openshift_web_console_install=false
 template_service_broker_install=false
+
+
+# Set the host name that will be used in the route for the integrated registry:
+openshift_hosted_registry_routehost="registry-service.{{ args.sandbox_hostname }}"
+
+# Don't install the dependencies of the storage plugins that we aren't going to use:
+osn_storage_plugin_deps=[]
 
 [all:vars]
 
