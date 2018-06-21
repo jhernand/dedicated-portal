@@ -46,6 +46,17 @@ parameters:
 
 objects:
 
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: messaging-data
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+
 - apiVersion: apps/v1beta1
   kind: Deployment
   metadata:
@@ -64,7 +75,8 @@ objects:
       spec:
         volumes:
         - name: data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: messaging-data
         containers:
         - name: service
           image: dedicated-portal/messaging-service:${VERSION}
